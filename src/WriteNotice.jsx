@@ -1,12 +1,13 @@
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { useState } from "react";
-import { uploadData } from "./Firebase/Providers";
+import { uploadNews } from "./Firebase/Providers";
 
-export const WriteNotice = () => {
+export const WriteNew = () => {
   const [values, setValues] = useState({
     Email: "",
     Contenido: "",
     Fecha: "",
+    Titulo:"",
     Nombre: "",
     Link:"https://static.vecteezy.com/system/resources/previews/001/234/420/non_2x/breaking-news-on-mesh-background-vector.jpg",
   });
@@ -20,7 +21,7 @@ export const WriteNotice = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    await uploadData(values)
+    await uploadNews(values)
   };
 
   return (
@@ -46,6 +47,15 @@ export const WriteNotice = () => {
         onChange={handleChange}
       />
       <br />
+      <TextField
+        label="Titulo"
+        variant="outlined"
+        margin="normal"
+        name="Titulo"
+        fullWidth
+        value={values.Titulo}
+        onChange={handleChange}
+      />
       <TextField
         label="Contenido"
         variant="outlined"

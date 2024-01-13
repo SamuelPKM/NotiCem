@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useState} from "react";
 import { NoticeCard } from "./NoticeCard";
-import { WriteNotice } from "./WriteNotice";
+import { WriteNew } from "./WriteNotice";
 
 const drawerWidth = 240;
 const navItems = ["Ver Noticias", "Crear Noticias"];
@@ -96,7 +96,7 @@ export const Header = () => {
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
         {writeMode && <NoticeCard />}
-        {!writeMode && <WriteNotice/>}
+        {!writeMode && <WriteNew/>}
       </Box>
     </Box>
   );
