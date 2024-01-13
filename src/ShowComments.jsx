@@ -1,39 +1,60 @@
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import { Typography } from "@mui/material";
-import PropTypes from "prop-types";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+  Stack,
+  Dialog,
+} from "@mui/material";
+import { useState, useEffect } from "react";
+import { getComments } from "./Firebase/Providers";
 
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+export const ShowComments = ({ open, handleClose, id }) => {
+  const [commentsData, setCommentsData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getComments(id);
+        setCommentsData(data);
+      } catch (error) {
+        console.error("Error al obtener noticias:", error);
+      }
+    };
 
-export const ShowComments = ({ open, handleClose, dialogTitle, dialogMessage, okButtonMessage }) => {
+    fetchData();
+  }, []);
+
   return (
-    <Dialog open={open} TransitionComponent={Transition} keepMounted disableEscapeKeyDown>
-      <DialogTitle align="center">{dialogTitle}</DialogTitle>
-      <DialogContent dividers>
-        <DialogContentText>
-          <Typography variant="h6">{dialogMessage}</Typography>
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="pdGreen" variant="contained" type="submit">
-          {okButtonMessage}
-        </Button>
-      </DialogActions>
+    <Dialog open={open} keepMounted disableEscapeKeyDown sx={{p:5}}>
+      <Stack direction={"column"} spacing={2} useFlexGap flexWrap="wrap">
+        {commentsData.map((comments) => (
+          <Card key={comments.id} sx={{ maxWidth: 345 }}>
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                {comments.data.Contenido || "Sin contenido"}
+              </Typography>
+              <br />
+              <Typography gutterBottom variant="body3">
+                {comments.data.RespEmail || "Sin Email"}
+              </Typography>
+              <br />
+              <Typography gutterBottom variant="body3">
+                {comments.data.RespNombre || "Sin nombre"}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" onClick={() => handleClose(false)} disabled>
+                Responder
+              </Button>
+            </CardActions>
+          </Card>
+        ))}
+      </Stack>
+      <br />
+      <Button size="small" variant="contained" onClick={() => handleClose(false)} sx={{}}>
+        Cerrar
+      </Button>
     </Dialog>
   );
-};
-
-GenericDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  dialogTitle: PropTypes.string.isRequired,
-  dialogMessage: PropTypes.string.isRequired,
-  okButtonMessage: PropTypes.string.isRequired,
 };

@@ -10,12 +10,12 @@ import {
 import { getNews } from "./Firebase/Providers";
 import { useState, useEffect } from "react";
 import { Comment } from "./Comment";
-import { getComments } from "./Firebase/Providers";
-
+import { ShowComments } from "./ShowComments";
 //Esqueleto para mapear las noticias
 export const NoticeCard = () => {
   const [newsData, setNewsData] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogMessage, setDialogMessage] = useState("");
   const [newID, setNewID] = useState("");
@@ -39,9 +39,9 @@ export const NoticeCard = () => {
     setOpenDialog(true);
   };
 
-  const handleShowCommentsClick = async(id) => {
-    console.log(id);
-    await getComments(id);
+  const handleShowCommentsClick = async (id) => {
+    setNewID(id);
+    setShowComments(true);
   };
   return (
     <Stack direction={"row"} spacing={2} useFlexGap flexWrap="wrap">
@@ -98,6 +98,9 @@ export const NoticeCard = () => {
           id={newID}
           okButtonMessage="Enviar"
         />
+      )}
+      {showComments && (
+        <ShowComments open= {showComments} handleClose={setShowComments} id={newID} />
       )}
     </Stack>
   );
