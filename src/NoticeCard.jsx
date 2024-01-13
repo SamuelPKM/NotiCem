@@ -14,7 +14,7 @@ export const NoticeCard = () => {
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image=""
+        image="https://static.vecteezy.com/system/resources/previews/001/234/420/non_2x/breaking-news-on-mesh-background-vector.jpg"
         title="green iguana"
       />
       <CardContent>

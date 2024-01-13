@@ -1,5 +1,6 @@
-import { TextField, Button, Box } from "@mui/material";
+import { TextField, Button, Box, Typography } from "@mui/material";
 import { useState } from "react";
+import { uploadData } from "./Firebase/Providers";
 
 export const WriteNotice = () => {
   const [values, setValues] = useState({
@@ -7,6 +8,7 @@ export const WriteNotice = () => {
     Contenido: "",
     Fecha: "",
     Nombre: "",
+    Link:"https://static.vecteezy.com/system/resources/previews/001/234/420/non_2x/breaking-news-on-mesh-background-vector.jpg",
   });
 
   const handleChange = (e) => {
@@ -16,48 +18,52 @@ export const WriteNotice = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    
+    await uploadData(values)
   };
 
   return (
-    <Box component={"form"}>
+    <Box component={"form"} sx={{margin:2, border:"2px solid black", p:2}}>
+      <Typography variant="h4">Subir una noticia</Typography>
       <TextField
-        label="Campo 1"
+        label="Email"
         variant="outlined"
         margin="normal"
         name="Email"
+        fullWidth
         value={values.Email}
         onChange={handleChange}
       />
       <br />
       <TextField
-        label="Campo 4"
+        label="Nombre"
         variant="outlined"
         margin="normal"
         name="Nombre"
+        fullWidth
         value={values.Nombre}
         onChange={handleChange}
       />
       <br />
       <TextField
-        label="Campo 2"
+        label="Contenido"
         variant="outlined"
         margin="normal"
         multiline
+        fullWidth
         rows={4}
         name="Contenido"
         value={values.Contenido}
         onChange={handleChange}
       />
-      <br />
       <TextField
-        label="Campo 3"
+        label="Link de imagen"
         variant="outlined"
         margin="normal"
-        name="Fecha"
-        value={values.Fecha}
+        name="Link"
+        fullWidth
+        value={values.Link}
         onChange={handleChange}
       />
       <br />
@@ -66,6 +72,7 @@ export const WriteNotice = () => {
         variant="contained"
         color="primary"
         onClick={handleSubmit}
+        sx={{ml:7}}
       >
         Enviar
       </Button>
