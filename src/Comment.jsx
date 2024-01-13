@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { uploadComments } from "./Firebase/Providers";
 
 export const Comment = ({
   open,
@@ -22,6 +23,7 @@ export const Comment = ({
     RespEmail: "",
     Contenido: "",
     RespNombre: "",
+    id: id
   });
 
   const handleChange = (e) => {
@@ -33,7 +35,7 @@ export const Comment = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    await uploadComments(values)
     set(false);
   };
 

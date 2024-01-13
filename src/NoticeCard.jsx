@@ -10,14 +10,15 @@ import {
 import { getNews } from "./Firebase/Providers";
 import { useState, useEffect } from "react";
 import { Comment } from "./Comment";
+import { getComments } from "./Firebase/Providers";
 
 //Esqueleto para mapear las noticias
 export const NoticeCard = () => {
   const [newsData, setNewsData] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [dialogTitle, setDialogTitle] = useState("")
-  const [dialogMessage, setDialogMessage] = useState("")
-  const [newID, setNewID] = useState("")
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [newID, setNewID] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,14 +33,15 @@ export const NoticeCard = () => {
   }, []);
 
   const handleCommentClick = (id, Titulo, Email) => {
-    setDialogMessage(Email)
-    setDialogTitle(Titulo)
-    setNewID(id)
-    setOpenDialog(true)
+    setDialogMessage(Email);
+    setDialogTitle(Titulo);
+    setNewID(id);
+    setOpenDialog(true);
   };
 
-  const handleShowCommentsClick = () => {
-    
+  const handleShowCommentsClick = async(id) => {
+    console.log(id);
+    await getComments(id);
   };
   return (
     <Stack direction={"row"} spacing={2} useFlexGap flexWrap="wrap">
@@ -87,7 +89,7 @@ export const NoticeCard = () => {
           </CardActions>
         </Card>
       ))}
-        {openDialog && (
+      {openDialog && (
         <Comment
           open={openDialog}
           set={setOpenDialog}
