@@ -22,16 +22,17 @@ export const ShowResp = ({ id, commentsId }) => {
       {filteredRespData.map((reply) => (
         <Card key={reply.id} sx={{ maxWidth: 345 }}>
           <CardContent>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="subtitle1" >
               {reply.data.Contenido || "Sin contenido"}
             </Typography>
             <br />
-            <Divider textAlign="left">Datos del autor</Divider>
-            <Typography gutterBottom variant="body3">
+            <Divider textAlign="left">
+              <Typography variant="body2">Datos del autor</Typography>
+              </Divider>
+            <Typography gutterBottom variant="body2" color="text.secondary">
               {reply.data.Email || "Sin Email"}
             </Typography>
-            <br />
-            <Typography gutterBottom variant="body3">
+            <Typography gutterBottom variant="body2" color="text.secondary">
               {reply.data.Nombre || "Sin nombre"}
             </Typography>
           </CardContent>

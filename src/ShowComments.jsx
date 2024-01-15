@@ -56,7 +56,7 @@ export const ShowComments = ({ open, handleClose, id }) => {
           commentsData.map((comments) => (
             <Card key={comments.id} sx={{ backgroundColor: "floralwhite" }}>
               <CardContent>
-                <Typography variant="body">
+                <Typography variant="h6">
                   {comments.data.Contenido || "Sin contenido"}
                 </Typography>
                 <br />
