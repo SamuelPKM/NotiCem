@@ -39,8 +39,10 @@ export const NoticeCard = () => {
     setOpenDialog(true);
   };
 
-  const handleShowCommentsClick = async (id) => {
+  const handleShowCommentsClick = async (id, Titulo, Email) => {
     setNewID(id);
+    setDialogMessage(Email);
+    setDialogTitle(Titulo);
     setShowComments(true);
   };
   return (
@@ -82,7 +84,13 @@ export const NoticeCard = () => {
             </Button>
             <Button
               size="small"
-              onClick={() => handleShowCommentsClick(news.id)}
+              onClick={() =>
+                handleShowCommentsClick(
+                  news.id,
+                  news.data.Titulo,
+                  news.data.Email
+                )
+              }
             >
               Ver Comentarios
             </Button>
@@ -96,11 +104,15 @@ export const NoticeCard = () => {
           dialogTitle={dialogTitle}
           dialogMessage={dialogMessage}
           id={newID}
-          okButtonMessage="Enviar"
+          okButtonMessage="Comentar"
         />
       )}
       {showComments && (
-        <ShowComments open= {showComments} handleClose={setShowComments} id={newID} />
+        <ShowComments
+          open={showComments}
+          handleClose={setShowComments}
+          id={newID}
+        />
       )}
     </Stack>
   );

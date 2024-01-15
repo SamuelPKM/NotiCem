@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { uploadComments } from "./Firebase/Providers";
+import { uploadResp } from "./Firebase/Providers";
 
 export const Comment = ({
   open,
@@ -23,7 +24,7 @@ export const Comment = ({
     RespEmail: "",
     Contenido: "",
     RespNombre: "",
-    id: id
+    id: id,
   });
 
   const handleChange = (e) => {
@@ -35,19 +36,25 @@ export const Comment = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await uploadComments(values)
+
+    if (okButtonMessage === "Responder") {
+      await uploadResp(values);
+    } else {
+      await uploadComments(values);
+    }
+
     set(false);
   };
 
   return (
     <Dialog open={open} keepMounted disableEscapeKeyDown>
       <DialogTitle align="center">
-        Comentar a la noticia {dialogTitle}
+        {`${okButtonMessage} a ${dialogTitle}`}
       </DialogTitle>
       <DialogContent dividers>
         <DialogContentText>
           <Typography variant="body2">
-            Vas a comentar al usuario {dialogMessage}
+            {` Vas a ${okButtonMessage} a ${dialogMessage}`}
           </Typography>
         </DialogContentText>
         <TextField

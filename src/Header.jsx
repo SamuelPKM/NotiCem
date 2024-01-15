@@ -13,7 +13,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { useState} from "react";
+import { useState } from "react";
 import { NoticeCard } from "./NoticeCard";
 import { WriteNew } from "./WriteNotice";
 
@@ -22,10 +22,14 @@ const navItems = ["Ver Noticias", "Crear Noticias"];
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [writeMode, setWriteMode] = useState(false);
-  
+  const [writeMode, setWriteMode] = useState(true);
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+
+  const handleChangeOption = () => {
+    setWriteMode(!writeMode);
   };
 
   const drawer = (
@@ -49,7 +53,15 @@ export const Header = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar component="nav">
+      <AppBar
+        component="nav"
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          flexDirection: "row",
+          display: "block",
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -61,16 +73,14 @@ export const Header = () => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 1, display: { sm: "block" } }}
           >
             Noticias Educem
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button key={item} onClick={e => setWriteMode(!writeMode)} sx={{ color: "#fff" }}>
-                {item}
-              </Button>
-            ))}
+          <Box sx={{ display: { sm: "block" } }}>
+            <Button onClick={() => handleChangeOption()} sx={{ color: "#fff" }}>
+              {writeMode ? "Escribir una nota" : "Ver las notas"}
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
@@ -93,10 +103,20 @@ export const Header = () => {
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box
+        component="main"
+        sx={{
+          p: 3,
+          margin: 2,
+          display: "flex",
+          flexDirection: "column",
+          mx: "auto",
+          justifyContent: "center",
+        }}
+      >
         <Toolbar />
         {writeMode && <NoticeCard />}
-        {!writeMode && <WriteNew/>}
+        {!writeMode && <WriteNew />}
       </Box>
     </Box>
   );

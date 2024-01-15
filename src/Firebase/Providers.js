@@ -5,7 +5,7 @@ import {
   setDoc,
   collection,
   getDocs,
-  getDoc,
+  query,
   where,
 } from "firebase/firestore";
 
@@ -33,7 +33,6 @@ export const getNews = async () => {
     const newsArray = [];
 
     querySnapshot.forEach((doc) => {
-      // Agregar cada documento al array
       newsArray.push({
         id: doc.id,
         data: doc.data(),
@@ -64,14 +63,16 @@ export const uploadComments = async ({
 
 export const getComments = async (id) => {
   try {
-    const querySnapshot = await getDocs(
+    const q = query(
       collection(FirebaseDB, "Comments"),
       where("id", "==", id)
     );
+
+    const querySnapshot = await getDocs(q);
+
     const commentsArray = [];
 
     querySnapshot.forEach((doc) => {
-      // Agregar cada documento al array
       commentsArray.push({
         id: doc.id,
         data: doc.data(),
@@ -83,3 +84,41 @@ export const getComments = async (id) => {
     console.error("Error al obtener noticias:", error);
   }
 };
+
+export const uploadResp = async ({
+  id,
+  RespEmail,
+  Contenido,
+  RespNombre,
+}) => {
+  const docRef = collection(FirebaseDB, "Reply");
+  await setDoc(doc(docRef), {
+    Email: RespEmail,
+    Contenido: Contenido,
+    Nombre: RespNombre,
+    id: id,
+    Fecha: Date.now(),
+  });
+};
+
+export const getResp = async (id) => {
+  try {
+    const querySnapshot = await getDocs(
+      collection(FirebaseDB, "Reply"),
+      where("id", "==", id)
+    );
+    const commentsArray = [];
+
+    querySnapshot.forEach((doc) => {
+      commentsArray.push({
+        id: doc.id,
+        data: doc.data(),
+      });
+    });
+
+    return commentsArray;
+  } catch (error) {
+    console.error("Error al obtener respuestas:", error);
+  }
+};
+

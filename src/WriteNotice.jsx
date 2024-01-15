@@ -7,9 +7,9 @@ export const WriteNew = () => {
     Email: "",
     Contenido: "",
     Fecha: "",
-    Titulo:"",
+    Titulo: "",
     Nombre: "",
-    Link:"https://static.vecteezy.com/system/resources/previews/001/234/420/non_2x/breaking-news-on-mesh-background-vector.jpg",
+    Link: "https://static.vecteezy.com/system/resources/previews/001/234/420/non_2x/breaking-news-on-mesh-background-vector.jpg",
   });
 
   const handleChange = (e) => {
@@ -19,16 +19,27 @@ export const WriteNew = () => {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    await uploadNews(values)
+    await uploadNews(values);
   };
 
   return (
-    <Box component={"form"} sx={{margin:2, border:"2px solid black", p:2}}>
+    <Box
+      component={"form"}
+      sx={{
+        margin: 2,
+        border: "2px solid black",
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        width: "400px"
+      }}
+    >
       <Typography variant="h4">Subir una noticia</Typography>
       <TextField
-        label="Email"
+        label="Tu email"
         variant="outlined"
         margin="normal"
         name="Email"
@@ -38,7 +49,7 @@ export const WriteNew = () => {
       />
       <br />
       <TextField
-        label="Nombre"
+        label="Tu nombre"
         variant="outlined"
         margin="normal"
         name="Nombre"
@@ -48,7 +59,7 @@ export const WriteNew = () => {
       />
       <br />
       <TextField
-        label="Titulo"
+        label="Titulo de la noticia"
         variant="outlined"
         margin="normal"
         name="Titulo"
@@ -57,7 +68,7 @@ export const WriteNew = () => {
         onChange={handleChange}
       />
       <TextField
-        label="Contenido"
+        label="Contenido de la noticia"
         variant="outlined"
         margin="normal"
         multiline
@@ -82,7 +93,7 @@ export const WriteNew = () => {
         variant="contained"
         color="primary"
         onClick={handleSubmit}
-        sx={{ml:7}}
+        
       >
         Enviar
       </Button>
